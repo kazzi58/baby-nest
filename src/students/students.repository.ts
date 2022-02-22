@@ -29,14 +29,9 @@ export default class StudentsRepository extends Repository<Student> {
     }
 
     async updateStudent(id: string, updateStudentDto: UpdateStudentDto): Promise<Student> {
-        const {name, address, school} = updateStudentDto;
+        const updateResult = await this.update(id, updateStudentDto);
         const student = await this.findOne(id);
-
-        student.name = name;
-        student.address = address;
-        student.school = school;
-
-        await this.save(student);
+        console.log('res - ', updateResult);
         return student;
     }
 

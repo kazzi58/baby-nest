@@ -12,8 +12,8 @@ export class StudentsController {
     return this.studentsService.create(createStudentDto);
   }
 
-  @Post('update')
-  update(@Body() id:string, updateStudentDto: UpdateStudentDto){
+  @Post('update/:id')
+  update(@Param('id') id, @Body() updateStudentDto: UpdateStudentDto){
     return this.studentsService.update(id, updateStudentDto);
   }
 
