@@ -5,12 +5,9 @@ import { UpdateStudentDto } from './dto/update-student.dto';
 import StudentsRepository from './students.repository';
 
 @Injectable()
-export class StudentsService {
-
-  constructor(
-    @InjectRepository(StudentsRepository)
-    private studentsRepository: StudentsRepository,
-){}
+export class StudentsService{
+  constructor(@InjectRepository(StudentsRepository) private studentsRepository: StudentsRepository){
+  }
 
   async create(createStudentDto: CreateStudentDto) {
     const data = await this.studentsRepository.createStudent(createStudentDto);
@@ -21,8 +18,15 @@ export class StudentsService {
     return `This action returns all students`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} student`;
+  async findOne(id: string) {
+    const data = await this.studentsRepository.getStudent(id);
+    if (data!=undefined){
+      return data;
+    }
+    else {
+      return "No data found!";
+    }
+    
   }
 
   async update(id: string, updateStudentDto: UpdateStudentDto) {
@@ -30,7 +34,8 @@ export class StudentsService {
     return data;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} student`;
+  async remove(id: string) {
+    const result = this.studentsRepository.deleteStudent(id);
+    return result;
   }
 }

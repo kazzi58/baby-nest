@@ -14,4 +14,7 @@ export class Student {
     @Column()
     school: string;
 
+    @Column()
+    isDeleted: string='false';
+
 }

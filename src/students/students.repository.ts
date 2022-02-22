@@ -35,4 +35,29 @@ export default class StudentsRepository extends Repository<Student> {
         return student;
     }
 
+    async getStudent(id: string): Promise<Student | Error>{
+        const student = this.findOne({ where: { id: id, isDeleted: "false" } });
+        // const student_details = {
+        //     name: (await student).name,
+        //     address: (await student).address,
+        //     school: (await student).school
+        // }
+        return student;
+    }
+
+    async deleteStudent(id: string): Promise<string> {
+        const student = await this.findOne({ where: { id: id, isDeleted: "false" } });
+        console.log('stu - ', student);
+        if (student!=undefined){
+            // found the student with passed id in the database
+            (await student).isDeleted = 'true';
+            await this.update(id, {isDeleted: 'true'});
+            return `Student with ID: ${id} has been deleted from the database`;
+        }
+        else{
+            return `Student with ID: ${id} does not exist in the database`;
+        }
+        
+    }
+
 }
