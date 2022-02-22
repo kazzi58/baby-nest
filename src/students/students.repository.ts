@@ -37,12 +37,12 @@ export default class StudentsRepository extends Repository<Student> {
 
     async getStudent(id: string): Promise<Student | Error>{
         const student = this.findOne({ where: { id: id, isDeleted: "false" } });
-        // const student_details = {
-        //     name: (await student).name,
-        //     address: (await student).address,
-        //     school: (await student).school
-        // }
         return student;
+    }
+
+    async getAllStudents(): Promise<Student[]>{
+        const students = this.find({ select: ["name", "address", "school"], where: {isDeleted: "false"} })
+        return students;
     }
 
     async deleteStudent(id: string): Promise<string> {

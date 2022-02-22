@@ -14,8 +14,15 @@ export class StudentsService{
     return data;
   }
 
-  findAll() {
-    return `This action returns all students`;
+  async findAll() {
+    const data = await this.studentsRepository.getAllStudents();
+    if (data!=undefined){
+      return data;
+    }
+    else {
+      return "No data found!";
+    }
+
   }
 
   async findOne(id: string) {
